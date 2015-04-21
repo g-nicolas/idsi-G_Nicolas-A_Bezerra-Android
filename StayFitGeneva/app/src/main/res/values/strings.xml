@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">StayFitGeneva</string>
+
+    <!-- TPG Invoke Key-->
+    <string name="keyTPG">"78b36600-2a9a-11e3-921b-0002a5d5c51b"</string>
+
+
+    <string name="action_settings">Settings</string>
+
+    <!-- APP BUTTONS-->
+    <string name="button_tpg">TPG</string>
+    <string name="button_pharmacy_location">Emplacement pharmacies</string>
+    <string name="button_sport_facility_location">Complexe sportif</string>
+    <string name="button_hiking_and_bike_trails">Parcours randonnée et vélo</string>
+    <string name="button_terrasse_cafe">Terrasses de cafés</string>
+
+    <!-- displaymap menu items -->
+    <string name="TopoMenu">Topographic</string>
+    <string name="StreetMapMenu">Streets</string>
+    <string name="HybridMenu">Hybrid</string>
+    <string name="SatelliteMenu">Satellite</string>
+
+    <string name="title_activity_categories">CategoriesActivity</string>
+
+    <string name="title_activity_display_map">DisplayMapActivity</string>
+
+    <!-- OPENDATA SITG
+    -->
+    <string name="featureServiceURL">http://services.arcgis.com/oKgs2tbjK6zwTdvi/arcgis/rest/services/Major_World_Cities/FeatureServer/0</string>
+    <!-- Données des pharmacies-->
+    <string name="urlLayerPharmacyLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/80</string>
+
+    <!-- Données des installations sportives-->
+    <string name="urlLayerSportCenterLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/415</string>
+    <string name="urlLayerParcoursSport">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/416</string>
+
+    <!-- Données des parcours CYCLEVASIONS-->
+    <string name="urlLayerPisteVeloLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/302</string>
+    <!-- Données des aménagements cyclables-->
+    <string name="urlLayerAmenagement2RouesLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/298</string>
+
+    <!-- Données des parcours randonnée-->
+    <string name="urlLayerSentierPedestreLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/147</string>
+
+    <!-- Données des ITINERAIRES DE LOISIRS-->
+    <string name="urlLayerLoisirNatureLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/133</string>
+
+    <!-- Données des QUALITE DE L'EAU DES PLAGES GENEVOISES DU LAC-->
+    <string name="urlLayerQualitePlageLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/117</string>
+
+    <!-- Données des POLLUTION DE L'AIR NO2-->
+    <string name="urlLayerPollutionNO2">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/398</string>
+
+    <!-- Données des moyenne POLLUTION DE L'AIR NO2-->
+    <string name="urlLayerPollutionNO2Avg">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/399</string>
+
+    <!-- Données des terrasses -->
+    <string name="urlLayerTerrassesLoc">http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/417</string>
+
+
+</resources>
