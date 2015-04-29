@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff15cc84">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/cityField"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/updatedField"
+            android:layout_gravity="center_horizontal"
+            android:textSize="11sp"/>
+
+        <TextView
+            android:id="@+id/weather_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="70sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/currentTemperatureField"
+            android:layout_gravity="center_horizontal"
+            android:textSize="40sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/detailsField"
+            android:layout_gravity="center_horizontal" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:text="asdf"
+                    android:padding="3dip" />
+                <TextView
+                    android:id="@+id/jour1"
+                    android:gravity="right"
+                    android:padding="3dip" />
+                <TextView
+                    android:layout_column="1"
+                    android:id="@+id/jour2"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:text="asdf"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Ctrl-O"
+                    android:gravity="right"
+                    android:padding="3dip" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="Open..."
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:text="dd"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Dimanche"
+                    android:gravity="right"
+                    android:padding="3dip" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="dd"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:text="Lundi"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="donnée polinique 1"
+                    android:gravity="right"
+                    android:padding="3dip" />
+                <TextView
+                    android:layout_column="1"
+                    android:text="donnée polinique 2"
+                    android:padding="3dip" />
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+</FrameLayout>
+</LinearLayout>
