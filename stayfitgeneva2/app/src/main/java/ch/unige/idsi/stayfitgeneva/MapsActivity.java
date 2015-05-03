@@ -97,7 +97,6 @@ public class MapsActivity extends FragmentActivity {
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(gva, 14));
         mMap.addMarker(new MarkerOptions()
-                //  .title("Genève")
                 .position(gva));
         String lati = String.valueOf(
                 lat);
@@ -109,13 +108,6 @@ public class MapsActivity extends FragmentActivity {
 
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
-        //startDemo();
-        // Polylines are useful for marking paths and routes on the map.
-        /** mMap.addPolyline(new PolylineOptions().geodesic(true)
-         .add(new LatLng(46.224778, 6.036249))
-         .add(new LatLng(46.162391, 6.191776))
-         );*/
-
     }
 
 
@@ -166,7 +158,7 @@ public class MapsActivity extends FragmentActivity {
             for(ArrayList<LatLng> arraylist : allTracks){
                 PolylineOptions poly = new PolylineOptions();
                 for (LatLng latLong : arraylist) {
-                    //System.out.println(latLng.latitude + " - " + latLng.longitude);
+                    ;
                     LatLng temp = new LatLng(latLong.longitude, latLong.latitude);
                     poly.add(temp);
 

@@ -35,6 +35,7 @@ import android.util.Xml;
 public class MainActivity extends Activity {
     private Button position;
     private Button weather;
+    private Button tpg;
     //private  String xmlFolderPath;
     //private  String environmentxmlFolderPath;
     //private TextView tv;
@@ -47,6 +48,7 @@ public class MainActivity extends Activity {
         position =(Button)findViewById(R.id.maposition);
         //tv = (TextView)findViewById(R.id.textView);
         weather = (Button)findViewById(R.id.weatherbutton);
+        tpg = (Button)findViewById(R.id.tpg);
        // try {
          //   getArret();
         //} catch (IOException e) {
@@ -70,6 +72,15 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent= new Intent(MainActivity.this,WeatherActivity.class);
                 startActivityForResult(intent,2);
+            }
+        });
+        tpg.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(MainActivity.this,TPG_Activity.class);
+                startActivityForResult(intent,3);
             }
         });
     }

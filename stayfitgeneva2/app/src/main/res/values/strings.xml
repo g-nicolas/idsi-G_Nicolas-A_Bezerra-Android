@@ -14,4 +14,5 @@
     <string name="weather_drizzle">&#xf01c;</string>
     <string name="indice_uv">Indice Uv:</string>
     <string name="pollen">Pollen:</string>
+    <string name="title_activity_tpg_">Map</string>
 </resources>
