@@ -6,9 +6,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,27 +39,19 @@ public class MainActivity extends Activity {
     private Button position;
     private Button weather;
     private Button tpg;
-    //private  String xmlFolderPath;
-    //private  String environmentxmlFolderPath;
-    //private TextView tv;
-
+    private Button test;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         position =(Button)findViewById(R.id.maposition);
-        //tv = (TextView)findViewById(R.id.textView);
         weather = (Button)findViewById(R.id.weatherbutton);
         tpg = (Button)findViewById(R.id.tpg);
-       // try {
-         //   getArret();
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //} catch (XmlPullParserException e) {
-        //    e.printStackTrace();
-        //}
+        test = (Button)findViewById(R.id.testmap);
 
+        gestureDetector = new GestureDetector(new SwipeGestureDetector());
 
         position.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,32 +78,67 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent,3);
             }
         });
+        test.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(MainActivity.this,MapsActivity2.class);
+                startActivityForResult(intent,4);
+            }
+        });
+
+    }
+    //Méthode pour switcher entre les activités à gauche ou à droite.
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (gestureDetector.onTouchEvent(event)) {
+            return true;
+        }
+        return super.onTouchEvent(event);
     }
 
-   /** private class getArret extends AsyncTask<URL, void, void> {
+    private void onLeftSwipe() {
+        Intent intent= new Intent(MainActivity.this,WeatherActivity.class);
+        startActivityForResult(intent,2);
+    }
 
+    private void onRightSwipe() {
+        Intent intent= new Intent(MainActivity.this,TPG_Activity.class);
+        startActivityForResult(intent,3);
+    }
+    private class SwipeGestureDetector
+            extends GestureDetector.SimpleOnGestureListener {
+        // Swipe properties, you can change it to make the swipe
+        // longer or shorter and speed
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 200;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
-        XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory;
-        xmlPullParserFactory.setNamespaceAware(true);
-        XmlPullParser xmlPullParser = xmlPullParserFactory.newPullParser();
-        URL url = new URL("http://rtpi.data.tpg.ch/v1/GetPhysicalStops.xml?key=78b36600-2a9a-11e3-921b-0002a5d5c51b");
-        URLConnection connection = url.openConnection();
-        InputStreamReader in = new InputStreamReader(connection.getInputStream());
-        File filexml = new File(String.valueOf(in));
-        FileInputStream fileInputStream = new FileInputStream(filexml);
-        xmlPullParser.setInput(new InputStreamReader(fileInputStream));
-        int length = connection.getContentLength();
-        int eventType = xmlPullParser.getEventType();
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2,
+                               float velocityX, float velocityY) {
+            try {
+                float diffAbs = Math.abs(e1.getY() - e2.getY());
+                float diff = e1.getX() - e2.getX();
 
-        while (eventType != XmlPullParser.END_DOCUMENT){
+                if (diffAbs > SWIPE_MAX_OFF_PATH)
+                    return false;
 
-            StringWriter out = new StringWriter(length);
-            String content = out.toString();
-            tv.setText(content);}
+                // Left swipe
+                if (diff > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    MainActivity.this.onLeftSwipe();
 
-        in.close();
-
-    }*/
-
-
+                    // Right swipe
+                } else if (-diff > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    MainActivity.this.onRightSwipe();
+                }
+            } catch (Exception e) {
+                Log.e("MainActivity", "Error on gestures");
+            }
+            return false;
+        }
+    }
 }

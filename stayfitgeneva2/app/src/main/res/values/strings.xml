@@ -15,4 +15,8 @@
     <string name="indice_uv">Indice Uv:</string>
     <string name="pollen">Pollen:</string>
     <string name="title_activity_tpg_">Map</string>
+    <string name="accueil">Accueil</string>
+    <string name="meteo">Meteo</string>
+    <string name="cartes">Cartes</string>
+    <string name="title_activity_maps_activity2">Map</string>
 </resources>

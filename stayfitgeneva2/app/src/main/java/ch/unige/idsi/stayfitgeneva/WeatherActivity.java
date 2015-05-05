@@ -319,11 +319,11 @@ public class WeatherActivity extends Activity {
 
                         }
                         else if((uvData.endsWith("7"))||(uvData.endsWith("8"))){
-                            soleil = "Risque de coup de soleil rapide, élevé ";
+                            soleil = "Risque élevé de coup de soleil";
 
                         }
                         else if((uvData.endsWith("9"))||(uvData.endsWith("10"))||(uvData.endsWith("11"))){
-                            soleil = "Risque de coup de soleil rapide, très élevé";
+                            soleil = "Risque très élevé de coup de soleil";
 
                         }
                         else{
