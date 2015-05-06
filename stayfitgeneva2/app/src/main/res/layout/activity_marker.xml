@@ -18,7 +18,7 @@
         android:layout_alignLeft="@+id/Direction"
         android:text=" "
         android:layout_below="@+id/nomarret"
-        android:layout_toLeftOf="@+id/Direction"/>
+        android:layout_toLeftOf="@+id/direction"/>
 
     <TextView
         android:id="@+id/direction"
@@ -26,7 +26,17 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/ligne"
         android:layout_toRightOf="@+id/ligne"
+        android:layout_below="@+id/nomarret"
         android:text=" " />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_alignRight="@+id/direction"
+        android:layout_toRightOf="@+id/direction"
+        android:layout_below="@+id/nomaret"
+        android:id="@+id/Departs" />
 
 
 </LinearLayout>

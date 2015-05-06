@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -249,6 +250,7 @@ public class TPG_Activity extends FragmentActivity {
                 ArrayList<String> destinationarret = new ArrayList<>();*/
                 ArrayList<String> latitude = new ArrayList<>();
                 ArrayList<String> longitude = new ArrayList<>();
+                arret = new ArrayList<>();
 
 
                 try {
@@ -325,40 +327,40 @@ public class TPG_Activity extends FragmentActivity {
         protected void onPostExecute(HashMap<String, ArrayList<LatLng>> result) {
 
             final MarkerOptions marker = new MarkerOptions();
-            String url = new String();
+            //String url = new String();
 
 
             for (final String cd : hashMap.keySet()) {
 
-                url = "http://rtpi.data.tpg.ch/v1/GetPhysicalStops.xml?key=78b36600-2a9a-11e3-921b-0002a5d5c51b&stopCode=" + cd;
+
                 //getDetailMarker.execute(url);
                 for (final LatLng latLng : hashMap.get(cd)) {
-
-                    mMap.addMarker(marker.position(latLng).title("Code de l'arrêt voulu: "+cd));
-
-
-
+                    mMap.addMarker(marker.position(latLng).title(cd));
                 }
-                final String finalUrl = url;
-                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-
-                    @Override
-                    public boolean onMarkerClick(Marker arg0) {
-                        if (arg0.getTitle().equals(cd)) // if marker source is clicked
-                        //passer Latlng et faire recherche rdonnee sur la lat et long et retirer pour chaqeu marker etc.
-                        {
-                            Intent intent = new Intent(TPG_Activity.this, MarkerActivity.class);
-                            intent.putExtra("Url", finalUrl);
-                            intent.putExtra("coordonnées", arg0.getPosition());
-                            startActivityForResult(intent, 1);
-                        }
-                        return true;
-                    }
-
-                });
-
 
             }
+
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+                @Override
+                public boolean onMarkerClick(Marker arg0) {
+                    // if (arg0.getTitle().equals(cd)) // if marker source is clicked
+                    //passer Latlng et faire recherche rdonnee sur la lat et long et retirer pour chaqeu marker etc.
+                    //{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Code de l'arrêt voulu: " + arg0.getTitle(), Toast.LENGTH_LONG);
+                    toast.show();
+                    String url = "http://rtpi.data.tpg.ch/v1/GetPhysicalStops.xml?key=78b36600-2a9a-11e3-921b-0002a5d5c51b&stopCode=" + arg0.getTitle();
+                    String lng = String.valueOf(arg0.getPosition().longitude);
+                    Intent intent = new Intent(TPG_Activity.this, MarkerActivity.class);
+                    intent.putExtra("Url", url);
+                    intent.putExtra("longitude", lng);
+                    intent.putExtra("titre",arg0.getTitle());
+                    startActivityForResult(intent, 1);
+                    // }
+                    return true;
+                }
+
+            });
         }
 
         //googlemap.setOnMarkerClickListener(this);
