@@ -2,12 +2,16 @@ package ch.unige.idsi.stayfitgeneva;
 
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -31,13 +35,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class MapsActivity extends FragmentActivity {
+public class MapsActivity extends FragmentActivity implements LocationListener {
 
     private GoogleMap mMap;
     private LocationManager lm;
     private double lg;
     private double lat;
     private LatLng gva;
+
     private double latitude;
     private double longitude;
     private GoogleMap map;
@@ -49,18 +54,64 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
         parse = new parseLayer();
         parse.execute();
+        
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        lm = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000,0, this);
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
         setUpMapIfNeeded();
 
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        lm.removeUpdates(this);
+    }
+    @Override
+    public void onLocationChanged(Location location) {
 
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        String str = String.valueOf(latitude).concat(String.valueOf(longitude));
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        String newStatus = "";
+        switch (status) {
+            case LocationProvider.OUT_OF_SERVICE:
+                newStatus = "OUT_OF_SERVICE";
+                break;
+            case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                newStatus = "TEMPORARILY_UNAVAILABLE";
+                break;
+            case LocationProvider.AVAILABLE:
+                newStatus = "AVAILABLE";
+                break;
+        }
+
+        Toast.makeText(this, newStatus, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -110,8 +161,7 @@ public class MapsActivity extends FragmentActivity {
         toast.show();
     }
 
-
-        class parseLayer extends AsyncTask<Void, Void, ArrayList<ArrayList<LatLng>>> {
+    class parseLayer extends AsyncTask<Void, Void, ArrayList<ArrayList<LatLng>>> {
 
 
             ArrayList<ArrayList<LatLng>> allTracks = new ArrayList<ArrayList<LatLng>>();

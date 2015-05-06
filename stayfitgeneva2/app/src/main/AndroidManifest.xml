@@ -17,11 +17,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
-
     <application
         android:allowBackup="true"
         android:debuggable="true"
@@ -57,8 +52,8 @@
             android:label="@string/title_activity_tpg_" >
         </activity>
         <activity
-            android:name=".MapsActivity2"
-            android:label="@string/title_activity_maps_activity2" >
+            android:name=".MarkerActivity"
+            android:label="@string/title_activity_marker" >
         </activity>
     </application>
 

@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:text=""
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:id="@+id/nomarret" />
+
+    <TextView
+        android:id="@+id/ligne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Direction"
+        android:text=" "
+        android:layout_below="@+id/nomarret"
+        android:layout_toLeftOf="@+id/Direction"/>
+
+    <TextView
+        android:id="@+id/direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ligne"
+        android:layout_toRightOf="@+id/ligne"
+        android:text=" " />
+
+
+</LinearLayout>

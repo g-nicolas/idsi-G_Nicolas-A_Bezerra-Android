@@ -78,15 +78,7 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent,3);
             }
         });
-        test.setOnClickListener(new View.OnClickListener() {
 
-
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(MainActivity.this,MapsActivity2.class);
-                startActivityForResult(intent,4);
-            }
-        });
 
     }
     //Méthode pour switcher entre les activités à gauche ou à droite.

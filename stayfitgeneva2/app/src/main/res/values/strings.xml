@@ -3,6 +3,7 @@
     <string name="stayfitgeneva">StayFitGeneva</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_weather">Weather</string>
+    <string name="title_activity_marker">Detail sur le marker</string>
 
     <string name="weather_sunny">&#xf00d;</string>
     <string name="weather_clear_night">&#xf02e;</string>

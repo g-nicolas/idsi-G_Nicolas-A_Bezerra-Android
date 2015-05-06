@@ -1,17 +1,18 @@
 package ch.unige.idsi.stayfitgeneva;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.jsoup.Jsoup;
@@ -33,6 +34,7 @@ public class TPG_Activity extends FragmentActivity {
     private LatLng gva;
     getStopsPosition getstopsposition;
     getStopCode getstopcode;
+    //getDetailMarker getDetailMarker;
     HashMap<String, ArrayList<ArrayList<String>>> hashMap;
 
 
@@ -43,6 +45,8 @@ public class TPG_Activity extends FragmentActivity {
         hashMap = new HashMap();
         getstopcode = new getStopCode();
         getstopsposition = new getStopsPosition();
+        // getDetailMarker = new getDetailMarker();
+
         setUpMapIfNeeded();
 
         try {
@@ -102,8 +106,7 @@ public class TPG_Activity extends FragmentActivity {
     private void setUpMap() {
 
         ArrayList<String> geloc = new ArrayList<>();
-
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         Location l = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         String lgt;
         String lt;
@@ -115,8 +118,8 @@ public class TPG_Activity extends FragmentActivity {
             gva = new LatLng(lat, lg);
 
         } else {
-            lat =46.198198;
-             lg = 6.140999;
+            lat = 46.198198;
+            lg = 6.140999;
         }
         lgt = String.valueOf(lg);
         lt = String.valueOf(lat);
@@ -201,61 +204,102 @@ public class TPG_Activity extends FragmentActivity {
     }
 
 
-    class getStopsPosition extends AsyncTask<ArrayList<String>, Void, HashMap<String, ArrayList<ArrayList<String>>>> {
+    class getStopsPosition extends AsyncTask<ArrayList<String>, Void, HashMap<String, ArrayList<LatLng>>> {
 
 
         ArrayList<String> codeStop = new ArrayList<>();
         ArrayList<String> code = new ArrayList<>();
-        ArrayList<ArrayList<String>> stopposition = new ArrayList<>();
+        ArrayList<LatLng> arret = new ArrayList<>();
+        HashMap<String, ArrayList<LatLng>> hashMap = new HashMap<>();
+        //ArrayList<ArrayList<String>> stopposition = new ArrayList<>();
 
 
         @SafeVarargs
         @Override
-        protected final HashMap<String, ArrayList<ArrayList<String>>> doInBackground(ArrayList<String>... params) {
+        protected final HashMap<String, ArrayList<LatLng>> doInBackground(ArrayList<String>... params) {
             Document document;
-
 
             codeStop = params[0];
 
-            StringBuilder sb = new StringBuilder();
+            /*for (String tempString : codeStop) {
+
+                tempString.replaceAll("\n", "");
+                tempString.replaceAll(" ", "");
+                tempString.substring(0, tempString.length() - 1);
+                code.add(tempString);
+
+            }*/
+
             for (String tempString : codeStop) {
-                sb.append(tempString).append(",");
+                StringBuilder sb = new StringBuilder();
+                sb.append(tempString);
                 String s = sb.toString().replaceAll("\n", "");
                 s = s.replaceAll(" ", "");
-                s = s.substring(0, s.length() - 1);
+                //s = s.substring(0, s.length() - 1);
                 code.add(s);
 
             }
-            for (int i = 0; i < code.size(); i++) {
-                String codearret = code.get(i);
+            for (String codearret : code) {
+                //String codearret = code.get(i);
                 String url = "http://rtpi.data.tpg.ch/v1/GetPhysicalStops.xml?key=78b36600-2a9a-11e3-921b-0002a5d5c51b&stopCode=" + codearret;
                 //String url2 = new String("http://rtpi.data.tpg.ch/v1/GetNextDepartures.xml?key=78b36600-2a9a-11e3-921b-0002a5d5c51b&stopCode=" + code.get(i));
-                ArrayList<String> latitudelongitude = new ArrayList<>();
-                ArrayList<String> detailarret = new ArrayList<>();
-
+               /* ArrayList<String> latitudelongitude = new ArrayList<>();
+                ArrayList<String> lignearret = new ArrayList<>();
+                ArrayList<String> nomarret = new ArrayList<>();
+                ArrayList<String> destinationarret = new ArrayList<>();*/
+                ArrayList<String> latitude = new ArrayList<>();
+                ArrayList<String> longitude = new ArrayList<>();
 
 
                 try {
                     document = Jsoup.connect(url).get();
-                    for (Element element : document.getElementsByTag("physicalStop")) {
+                    for (Element f : document.select("latitude")) {
+                        latitude.add(f.toString().replace("<latitude>", "").replace("</latitude>", "").replaceAll(" ", "").replaceAll("\n", ""));
+                    }
+                    for (Element g : document.select("longitude")) {
+                        longitude.add(g.toString().replace("<longitude>", "").replace("</longitude>", "").replaceAll(" ", "").replaceAll("\n", ""));
+                    }
+                    int taille = latitude.size();
+
+                    for (int i = 0; i < taille; i++) {
+                        Double d1 = (Double.parseDouble(latitude.get(i)));
+                        Double d2 = (Double.parseDouble(longitude.get(i)));
+                        LatLng latLng = new LatLng(d1, d2);
+                        arret.add(latLng);
+                        hashMap.put(codearret, arret);
+
+
+                    }
+
+
+                    //}
+                } catch (IOException e) {
+                    /*for (Element element : document.getElementsByTag("physicalStop")) {
+
+                        latitudelongitude = new ArrayList<>();
+                        nomarret = new ArrayList<>();
+                        lignearret = new ArrayList<>();
+                       // destinationarret = new ArrayList<>();
+
                         Elements latitude1 = element.getElementsByTag("latitude");
-                        latitudelongitude.add(latitude1.toString().replace("<latitude>", "").replace("</latitude>", ""));
+                        latitudelongitude.add(latitude1.toString().replace("<latitude>", "").replace("</latitude>", "").replaceAll(" ", "").replaceAll("\n", ""));
                         Elements longitude1 = element.getElementsByTag("longitude");
-                        latitudelongitude.add(longitude1.toString().replace("<longitude>", "").replace("</longitude>", ""));
-                        Elements nomarret = element.getElementsByTag("stopName");
-                        detailarret.add(nomarret.toString().replace("<stopname>", "").replace("</stopname>", ""));
+                        latitudelongitude.add(longitude1.toString().replace("<longitude>", "").replace("</longitude>", "").replaceAll(" ", "").replaceAll("\n", ""));
+                        Elements stopName = element.getElementsByTag("stopName");
+                        nomarret.add(stopName.toString().replace("<stopname>", "").replace("</stopname>", "").replaceAll(" ", "").replaceAll("\n", ""));
 
                         for (Element element1 : element.getElementsByTag("connection")) {
                             Elements linecode = element1.getElementsByTag("lineCode");
-                            detailarret.add(linecode.toString().replace("<linecode>", "").replace("</linecode>", ""));
+                            lignearret.add(linecode.toString().replace("<linecode>", "").replace("</linecode>", "").replaceAll(" ", "").replaceAll("\n", ""));
                             Elements destname = element1.getElementsByTag("destinationName");
-                            detailarret.add(destname.toString().replace("<destinationname>", "").replace("</destinationname>", ""));
+                            lignearret.add(destname.toString().replace("<destinationname>", "").replace("</destinationname>", "").replaceAll(" ", "").replaceAll("\n", ""));
                         }
                         // Elements linecode = element.getElementsByTag("lineCode");
 
 
                         //stopposition.add(destname.toString().replace("<destinationname>", "").replace("</destinationname>", ""));
                         //stopposition.add(linecode.toString().replace("<linecode>", "").replace("</linecode>", ""));
+
 
 
                         /*try {
@@ -268,21 +312,58 @@ public class TPG_Activity extends FragmentActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }*/
-
-
-                    }
-                } catch (IOException e) {
                     e.printStackTrace();
                 }
-                stopposition.addAll(Arrays.asList(latitudelongitude, detailarret));
-                hashMap.put(codearret, stopposition);
+                //stopposition.addAll(Arrays.asList(latitudelongitude, nomarret, lignearret));
+                //hashMap.put(codearret, stopposition);
+
             }
             return hashMap;
         }
 
 
-        protected void onPostExecute(HashMap<String, ArrayList<ArrayList<String>>> result) {
-            MarkerOptions marker = new MarkerOptions();
+        protected void onPostExecute(HashMap<String, ArrayList<LatLng>> result) {
+
+            final MarkerOptions marker = new MarkerOptions();
+            String url = new String();
+
+
+            for (final String cd : hashMap.keySet()) {
+
+                url = "http://rtpi.data.tpg.ch/v1/GetPhysicalStops.xml?key=78b36600-2a9a-11e3-921b-0002a5d5c51b&stopCode=" + cd;
+                //getDetailMarker.execute(url);
+                for (final LatLng latLng : hashMap.get(cd)) {
+
+                    mMap.addMarker(marker.position(latLng).title("Code de l'arrêt voulu: "+cd));
+
+
+
+                }
+                final String finalUrl = url;
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+                    @Override
+                    public boolean onMarkerClick(Marker arg0) {
+                        if (arg0.getTitle().equals(cd)) // if marker source is clicked
+                        //passer Latlng et faire recherche rdonnee sur la lat et long et retirer pour chaqeu marker etc.
+                        {
+                            Intent intent = new Intent(TPG_Activity.this, MarkerActivity.class);
+                            intent.putExtra("Url", finalUrl);
+                            intent.putExtra("coordonnées", arg0.getPosition());
+                            startActivityForResult(intent, 1);
+                        }
+                        return true;
+                    }
+
+                });
+
+
+            }
+        }
+
+        //googlemap.setOnMarkerClickListener(this);
+
+           /* MarkerOptions marker = new MarkerOptions();
             Double latitude = null;
             Double longitude = null;
             ArrayList<String> ligne = new ArrayList<>();
@@ -291,39 +372,35 @@ public class TPG_Activity extends FragmentActivity {
             ArrayList<String> det;
 
 
-            for (String key: hashMap.keySet()){
+            for (String key : hashMap.keySet()) {
                 ArrayList<ArrayList<String>> value = hashMap.get(key);
-                    for(int val = 0; val< value.size();val++){
-                        pos = value.get(0);
-                        det = value.get(1);
-                        for (int t =0; t< pos.size(); t++){
-                            if(t % 2 != 0  ) {
-                                longitude = (Double.parseDouble(pos.get(t)));
-                            }
-                            else {
-                                latitude = (Double.parseDouble(pos.get(t)));
-                            }
-                        }
-                        for (int t =0; t< det.size(); t++){
-                            if(t % 2 != 0  ) {
-                                ligne.add(det.get(t));
-                            }
-                            else {
-                                destination.add(det.get(t));
-                            }
-                        }
+                int taille = value.size();
+                for (ArrayList<String> arrayList : value) {
+
+
+                }
+                for (int val = 0; val < value.size(); val++) {
+                    pos = value.get(val);
+
+                    if (pos.get(val).startsWith("6.")) {
+                        longitude = (Double.parseDouble(pos.get(val)));
+                    } else {
+                        latitude = (Double.parseDouble(pos.get(val)));
                     }
 
-                    LatLng latLng = new LatLng(latitude,longitude);
-                     int taille = ligne.size();
+
+                }
+                LatLng latLng = new LatLng(latitude, longitude);
+                mMap.addMarker(marker.position(latLng));*/
+        //LatLng latLng = new LatLng(latitude,longitude);
+                     /*int taille = ligne.size();
                     for(int j = 0; j < taille; j++) {
                         String numligne = ligne.get(j);
-                        String nomdest = destination.get(j);
-                        mMap.addMarker(marker.position(latLng).title("Arrêt: " + key + "\n" + "Ligne: " + numligne + "\n" + "Destination: " + nomdest));
-                    }
-                }
-            }
-        }
+                       String nomdest = destination.get(j);*/
+        // mMap.addMarker(marker.position(latLng));//.title("Arrêt: " + key + "\n" + "Ligne: " + numligne + "\n" + "Destination: " + nomdest));
+        //}
+        //}
+
     }
 
 
@@ -331,8 +408,16 @@ public class TPG_Activity extends FragmentActivity {
                 Double latitude = (Double.parseDouble(value.get(1)));
                 LatLng latLng = new LatLng(latitude,longitude);
                 String ligne = value.get(2);
-                String destination = value.get(3);*/
+                String destination = value.get(3);
 
 
+
+
+                        Intent intent=new Intent(EcrireSujet.this,EcrireQA.class);
+        // putExtra marche comme HashMap (key,value)
+        */
+
+
+}
 
 
