@@ -1,82 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:weightSum="1">
-<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff15cc84">
-    <LinearLayout
-        android:orientation="vertical"
+    android:weightSum="1">
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ff15cc84">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/cityField"
-            android:layout_gravity="center_horizontal" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/updatedField"
-            android:layout_gravity="center_horizontal"
-            android:textSize="11sp"/>
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-        <TextView
-            android:id="@+id/weather_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textSize="70sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/currentTemperatureField"
-            android:layout_gravity="center_horizontal"
-            android:textSize="40sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/detailsField"
-            android:layout_gravity="center_horizontal" />
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TableRow>
                 <TextView
-                    android:layout_column="1"
+                    android:id="@+id/cityField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/updatedField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/weather_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="70sp" />
+
+                <TextView
+                    android:id="@+id/currentTemperatureField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:id="@+id/detailsField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="3dip"
                     android:text="@string/indice_uv"
-                    android:padding="3dip" />
-                <TextView
-                    android:text=""
-                    android:id="@+id/uv"
-                    android:gravity="end"
-                    android:padding="3dip" />
-            </TableRow>
+                    android:textSize="30sp" />
 
-            <TableRow>
                 <TextView
-                    android:layout_column="1"
+                    android:id="@+id/uv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="3dip"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="3dip"
                     android:text="@string/pollen"
-                    android:padding="3dip" />
+                    android:textSize="30sp" />
+
                 <TextView
                     android:id="@+id/pollen"
-                    android:text=""
-                    android:gravity="end"
-                    android:padding="3dip" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="3dip"
+                    android:textSize="18sp" />
 
-            </TableRow>
-        </TableLayout>
-
-    </LinearLayout>
-</FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
 </LinearLayout>

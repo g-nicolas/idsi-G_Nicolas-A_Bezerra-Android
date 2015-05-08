@@ -13,8 +13,8 @@
     <string name="weather_snowy">&#xf01b;</string>
     <string name="weather_thunder">&#xf01e;</string>
     <string name="weather_drizzle">&#xf01c;</string>
-    <string name="indice_uv">Indice Uv:</string>
-    <string name="pollen">Pollen:</string>
+    <string name="indice_uv">Indice Uv</string>
+    <string name="pollen">Pollen</string>
     <string name="title_activity_tpg_">Map</string>
     <string name="accueil">Accueil</string>
     <string name="meteo">Meteo</string>

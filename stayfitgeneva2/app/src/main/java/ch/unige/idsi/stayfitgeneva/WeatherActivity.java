@@ -138,6 +138,10 @@ public class WeatherActivity extends Activity {
             URL url = new URL(String.format(OPEN_WEATHER_MAP_API));
             HttpURLConnection connection =
                     (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.connect();
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()));

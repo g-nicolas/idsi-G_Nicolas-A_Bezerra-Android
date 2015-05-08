@@ -206,7 +206,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
             protected void onPostExecute(ArrayList<ArrayList<LatLng>> result) {
             for(ArrayList<LatLng> arraylist : allTracks){
-                PolylineOptions poly = new PolylineOptions();
+               PolylineOptions poly =   new PolylineOptions();
                 for (LatLng latLong : arraylist) {
                     ;
                     LatLng temp = new LatLng(latLong.longitude, latLong.latitude);
@@ -224,3 +224,89 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
         }
     }
+/**
+ * <View
+ android:layout_width="fill_parent"
+ android:layout_height="1dp"
+ android:background="@android:color/darker_gray"/>
+
+ <TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:text="Ligne:"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="20sp"
+ android:maxLength="99999999"/>
+
+ <TextView
+ android:id="@+id/ligne2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="70sp"
+ android:maxLength="99999999"/>
+
+ <TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:text="Arrêt:"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="20sp"
+ android:maxLength="99999999"/>
+
+ <TextView
+ android:id="@+id/nomarret2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="35sp"
+ android:maxLength="99999999"/>
+
+ <TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:text="Direction:"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="20sp"
+ android:maxLength="99999999"/>
+
+ <TextView
+ android:id="@+id/direction2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="35sp"
+ android:maxLength="99999999"/>
+
+ <TextView
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:text="Prochain départ:"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="20sp"
+ android:maxLength="99999999"/>
+
+ <TextView
+ android:id="@+id/Departs2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_gravity="center_horizontal"
+ android:textAppearance="?android:attr/textAppearanceMedium"
+ android:textSize="35sp"
+ android:maxLength="99999999"/>
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * */
