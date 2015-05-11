@@ -1,4 +1,4 @@
-package ch.unige.idsi.y15.stayfitgeneva;
+package ch.unige.idsi.stayfitgeneva;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
