@@ -21,4 +21,32 @@
     <string name="cartes">Cartes</string>
     <string name="title_activity_maps_activity2">Map</string>
     <string name="title_activity_maps_activity3">Map</string>
+
+    <string name="action_settings">Settings</string>
+    <!-- APP BUTTONS-->
+    <string name="button_tpg">TPG</string>
+    <string name="button_pharmacy_location">Emplacement pharmacies</string>
+    <string name="button_sport_facility_location">Complexe sportif</string>
+    <string name="button_hiking_trails">Parcours randonnée</string>
+    <string name="button_bike_trails">Parcours vélo</string>
+    <string name="button_terrasse_cafe">Terrasses de cafés</string>
+    <string name="buttonTestGMaps">TestGMaps</string>
+    <!-- displaymap menu items -->
+    <string name="TopoMenu">Topographic</string>
+    <string name="StreetMapMenu">Streets</string>
+    <string name="HybridMenu">Hybrid</string>
+    <string name="SatelliteMenu">Satellite</string>
+
+    <!-- Titre des Layouts
+    -->
+    <string name="title_activity_categories">Catégories</string>
+    <string name="title_activity_display_map">Carte</string>
+    <string name="title_activity_open_data_extractor">OpenDataExtractorActivity</string>
+
+    <string-array name="mapType">
+        <item>Topographic map</item>
+        <item>Street map</item>
+        <item>Hybrid map</item>
+        <item>Satellite map</item>
+    </string-array>
 </resources>

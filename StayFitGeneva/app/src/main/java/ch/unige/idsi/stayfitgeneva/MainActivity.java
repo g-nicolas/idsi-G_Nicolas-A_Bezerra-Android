@@ -2,62 +2,52 @@ package ch.unige.idsi.stayfitgeneva;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.StringTokenizer;
-import org.xmlpull.v1.*;
-import android.util.Xml;
-
-/**
- * Created by andre on 11.04.15.
- */
 
 public class MainActivity extends Activity {
-    private Button position;
-    private Button weather;
-    private Button tpg;
-    private Button test;
-    private GestureDetector gestureDetector;
+    public final static String EXTRA_TEXT = "ch.unige.idsi.y15.stayfitgeneva.EXTRA_TEXT";
+    Button position;
+    Button weather;
+    Button tpg;
+    GestureDetector gestureDetector;
+    Button maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        position =(Button)findViewById(R.id.maposition);
-        weather = (Button)findViewById(R.id.weatherbutton);
-        tpg = (Button)findViewById(R.id.tpg);
-        test = (Button)findViewById(R.id.testmap);
+        position = (Button) findViewById(R.id.maposition);
+        weather = (Button) findViewById(R.id.weatherbutton);
+        tpg = (Button) findViewById(R.id.tpg);
+        final Intent intent_category_list = new Intent(MainActivity.this, CategoriesActivity.class);
+        maps = (Button) findViewById(R.id.button_maps);
+        /**
+         *  When button Maps is clicked,
+         *
+         * */
+
+        maps.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Perform action on click
+                String buttonText = maps.getText().toString();
+                intent_category_list.putExtra(EXTRA_TEXT, buttonText);
+                MainActivity.this.startActivity(intent_category_list);
+            }
+        });
 
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
 
         position.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,MapsActivity.class);
-                startActivityForResult(intent,1);
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
         weather.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +55,8 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MainActivity.this,WeatherActivity.class);
-                startActivityForResult(intent,2);
+                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                startActivityForResult(intent, 2);
             }
         });
         tpg.setOnClickListener(new View.OnClickListener() {
@@ -74,31 +64,30 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MainActivity.this,TPG_Activity.class);
-                startActivityForResult(intent,3);
+                Intent intent = new Intent(MainActivity.this, TPG_Activity.class);
+                startActivityForResult(intent, 3);
             }
         });
 
 
     }
+
     //Méthode pour switcher entre les activités à gauche ou à droite.
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        }
-        return super.onTouchEvent(event);
+        return gestureDetector.onTouchEvent(event) || super.onTouchEvent(event);
     }
 
     private void onLeftSwipe() {
-        Intent intent= new Intent(MainActivity.this,WeatherActivity.class);
-        startActivityForResult(intent,2);
+        Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+        startActivityForResult(intent, 2);
     }
 
     private void onRightSwipe() {
-        Intent intent= new Intent(MainActivity.this,TPG_Activity.class);
-        startActivityForResult(intent,3);
+        Intent intent = new Intent(MainActivity.this, TPG_Activity.class);
+        startActivityForResult(intent, 3);
     }
+
     private class SwipeGestureDetector
             extends GestureDetector.SimpleOnGestureListener {
         // Swipe properties, you can change it to make the swipe

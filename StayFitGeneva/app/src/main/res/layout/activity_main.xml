@@ -1,51 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView android:text="@string/stayfitgeneva" android:layout_width="wrap_content"
+        android:id="@+id/textView2"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:id="@+id/textView2" />
+        android:layout_weight="0.0"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/maposition"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Autour de Moi"
-        android:id="@+id/maposition"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/button_maps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Maps"
+        />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="TPG"
         android:id="@+id/tpg"
-        android:layout_below="@+id/maposition"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp" />
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="test map"
-        android:id="@+id/testmap"
-        android:layout_below="@+id/tpg"
+        android:layout_below="@+id/maposition"
+        android:text="TPG"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="63dp" />
+        android:layout_weight="1" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:id="@+id/weatherbutton"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="weather"
-        android:id="@+id/weatherbutton"
-        android:layout_marginBottom="63dp"
         android:layout_above="@+id/maposition"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_weight="1"/>
 
-</RelativeLayout>
+</LinearLayout>
