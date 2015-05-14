@@ -1,12 +1,12 @@
 package ch.unige.idsi.stayfitgeneva;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,16 +38,13 @@ import java.util.HashMap;
 import java.util.Random;
 
 
-public class OpenDataExtractorActivity extends ActionBarActivity {
+public class OpenDataExtractorActivity extends Activity {
     HashMap<String, ArrayList<ArrayList<String>>> hashMapDataSet;
     Bundle extras;
     String catID;
     ArrayList<String> ressources_URL_Layers;
     GoogleMap googleMap;
     Geocoder geoCoder;
-    ArrayList<Double> listLat;
-    ArrayList<Double> listLong;
-    ArrayList<String> listMarkerName;
     ArrayList<String> fieldValues;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -90,9 +87,6 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
         // get list items from strings.xml
         //drawerListViewItems = getResources().getStringArray(R.array.mapType);
         //String strTest = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/81/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=false&maxAllowableOffset=&outSR=&outFields=*&f=pjson";
-        listLat = new ArrayList<>();
-        listLong = new ArrayList<>();
-        listMarkerName = new ArrayList<>();
         try {
             Log.e("CHECKPOINT", "setupContentExtractor");
             setupContentExtractor();
@@ -204,6 +198,22 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
             );
         }
     }
+    private void addMarker(double latitude, double longitude, String markerName, ArrayList<String> info, int icon) {
+
+        /** Make sure that the map has been initialised **/
+        if (null != googleMap) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(latitude, longitude));
+            markerOptions.title(markerName);
+            for (String text: info)
+            {
+                markerOptions.snippet(text);
+            }
+            markerOptions.draggable(false);
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(icon));
+            googleMap.addMarker(markerOptions);
+        }
+    }
 
     private void addPolyline(ArrayList<Double> array_latitude, ArrayList<Double> array_longitude, int color) {
         //
@@ -226,7 +236,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_open_data_extractor, menu);
+        getMenuInflater().inflate(R.menu.menu_maptype_settings, menu);
         return true;
     }
 
@@ -235,14 +245,22 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.maptype_Topographic:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                return true;
+            case R.id.maptype_StreetMap:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                return true;
+            case R.id.maptype_HybridMap:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                return true;
+            case R.id.maptype_SatelliteMap:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public String clean_Addresse(String lieu) {
@@ -284,7 +302,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
         protected Integer doInBackground(Void... params) {
             switch (catID) {
                 case "Parcours randonnée":
-                    final String source_hike_trail = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/144/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
+                    final String source_hike_trail = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/149/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
                     final String[] json_hike_trail = new String[1];
                     // Here send array sources to getJSONfromURL in a new thread
                     try {
@@ -298,7 +316,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                     break;
 
                 case "Parcours vélo":
-                    final String source_bike_trail = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/299/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
+                    final String source_bike_trail = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/307/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
                     final String[] json_bike_trail = new String[1];
                     // Here send array sources to getJSONfromURL in a new thread
                     try {
@@ -312,8 +330,8 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                     break;
 
                 case "Complexe sportif":
-                    final String source_sports_facilities_location = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/419/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
-                    final String source_sports_facilities_trail = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/420/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
+                    final String source_sports_facilities_location = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/428/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
+                    final String source_sports_facilities_trail = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/429/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
                     final String[] json_sports_facilities_trail = new String[1];
                     final String[] json_sports_facilities_location = new String[1];
                     // Here send array sources to getJSONfromURL in a new thread
@@ -321,7 +339,6 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                         json_sports_facilities_location[0] = getJSONfromURL(source_sports_facilities_location);
                         json_sports_facilities_trail[0] = getJSONfromURL(source_sports_facilities_trail);
                         // Here parse the json
-                        Log.e("CHECKPOINT", "parse the json sport ");
                         parseJSON(1, json_sports_facilities_location[0]);
                         parseJSON(2, json_sports_facilities_trail[0]);
                         /*
@@ -335,13 +352,12 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
 
                 case "Emplacement pharmacies":
                     // source1 = pharmacies ; source2 = hospitals
-                    final String source_pharmacies = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/80/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=false&maxAllowableOffset=&outSR=&outFields=*&f=pjson";
-                    final String source_hospitals = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/81/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=false&maxAllowableOffset=&outSR=&outFields=*&f=pjson";
+                    final String source_pharmacies = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/80/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
+                    final String source_hospitals = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/81/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
                     final String[] json_pharmacies = new String[1];
                     final String[] json_hospitals = new String[1];
                     // Here send array sources to getJSONfromURL in a new thread
                     try {
-                        Log.e("CHECKPOINT", "parse the json pharma ");
                         json_pharmacies[0] = getJSONfromURL(source_pharmacies);
                         json_hospitals[0] = getJSONfromURL(source_hospitals);
                         // Here parse the json
@@ -353,13 +369,12 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                     break;
 
                 case "Terrasses de cafés":
-                    final String source_terrasses = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/421/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=false&maxAllowableOffset=&outSR=&outFields=*&f=pjson";
+                    final String source_terrasses = "http://ge.ch/ags1/rest/services/open_data/vector_layers/MapServer/430/query?text=&geometry=&geometryType=esriGeometryPoint&inSR=2056&spatialRel=esriSpatialRelIntersects&relationParam=&objectIds=&where=0%3C1&time=&returnCountOnly=false&returnIdsOnly=false&returnGeometry=true&maxAllowableOffset=&outSR=4326&outFields=*&f=pjson";
                     final String[] json_terrasses = new String[1];
                     // Here send array sources to getJSONfromURL in a new thread
                     try {
                         json_terrasses[0] = getJSONfromURL(source_terrasses);
                         // Here parse the json
-                        Log.e("CHECKPOINT", "parse the json terrasse ");
                         parseJSON(1, json_terrasses[0]);
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -422,9 +437,9 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                             JSONObject object_JSON = jsonArray.getJSONObject(i);
                             // Access data from the object "attributes"
                             JSONObject curr_JSONObject = object_JSON.getJSONObject("attributes");
-                            String nom_itineraire = curr_JSONObject.getString("NOM_ITINERAIRE");
+                            String nom_itineraire = curr_JSONObject.getString("STATUT");
                             //Log.e("CHECKPOINT", nom_itineraire);
-                            String no_itineraire = curr_JSONObject.getString("NUMERO_ITINERAIRE");
+                            String no_itineraire = curr_JSONObject.getString("IDENTIFIANT");
                             JSONObject curr_JSONObject_geometry = object_JSON.getJSONObject("geometry");
                             String paths = curr_JSONObject_geometry.getString("paths");
                             objectValues.add(nom_itineraire);
@@ -605,7 +620,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
             //Log.w("CHECKPOINT", "Fin de la AsyncTask");
             switch (catID) {
                 case "Parcours randonnée":
-                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                    int color = Color.argb(255, 44, 162, 95);
                     for (int i = 0; i < hashMapDataSet.get("HIKING_TRAIL").size(); i++) {
                         // For each in String values
                         ArrayList<String> array = hashMapDataSet.get("HIKING_TRAIL").get(i);
@@ -627,7 +642,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                                 String[] stringCoordLatLong = values.split(",\\[\\[");
                                 // Lat = coordLatLong[1]   Long = coordLatLong[0]
                                 String[] coordLatLong = stringCoordLatLong[1].split(",");
-                                        addPolyline(arrayDoubleLat, arrayDoubleLng, color);
+                                addPolyline(arrayDoubleLat, arrayDoubleLng, color);
                                 arrayDoubleLat = new ArrayList<>();
                                 arrayDoubleLng = new ArrayList<>();
                                 arrayDoubleLat.add(Double.valueOf(coordLatLong[1]));
@@ -657,7 +672,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
 
                 case "Parcours vélo":
                     for (int i = 0; i < hashMapDataSet.get("BIKE_TRAIL").size(); i++) {
-                        color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                        color = Color.argb(255, 255, 102, 102);
                         // For each in String values
                         ArrayList<String> array = hashMapDataSet.get("BIKE_TRAIL").get(i);
                         String str_values = array.get(1);
@@ -678,7 +693,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                                 String[] stringCoordLatLong = val.split(",\\[\\[");
                                 // Lat = coordLatLong[1]   Long = coordLatLong[0]
                                 String[] coordLatLong = stringCoordLatLong[1].split(",");
-                                        addPolyline(arrayDoubleLat, arrayDoubleLng, color);
+                                addPolyline(arrayDoubleLat, arrayDoubleLng, color);
                                 arrayDoubleLat = new ArrayList<>();
                                 arrayDoubleLng = new ArrayList<>();
                                 arrayDoubleLat.add(Double.valueOf(coordLatLong[1]));
@@ -728,7 +743,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                                 String[] stringCoordLatLong = val.split(",\\[\\[");
                                 // Lat = coordLatLong[1]   Long = coordLatLong[0]
                                 String[] coordLatLong = stringCoordLatLong[1].split(",");
-                                        addPolyline(arrayDoubleLat, arrayDoubleLng, color);
+                                addPolyline(arrayDoubleLat, arrayDoubleLng, color);
                                 arrayDoubleLat = new ArrayList<>();
                                 arrayDoubleLng = new ArrayList<>();
                                 arrayDoubleLat.add(Double.valueOf(coordLatLong[1]));
@@ -759,9 +774,14 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                         // For each in String values
                         ArrayList<String> array = hashMapDataSet.get("SPORTS_CENTER_LOCATION").get(i);
                         //Log.e("Nom Array", array.get(0));
+                        String title = array.get(0);
                         Double coordLat = Double.valueOf(array.get(1));
                         Double coordLong = Double.valueOf(array.get(2));
                         String sport = array.get(0);
+                        ArrayList<String> snippetInfo = new ArrayList<>();
+                        snippetInfo.add("Type: "+array.get(3));
+                        //snippetInfo.add("Commune: "+array.get(4));
+                        //snippetInfo.add(array.get(5));
                         int marker = R.drawable.map_marker_orange;
                         switch (sport){
                             case "Basketball":
@@ -801,7 +821,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                                 marker = R.drawable.athlete_marker;
                                 break;
                         }
-                        addMarker(coordLat, coordLong, array.get(0), marker);
+                        addMarker(coordLat, coordLong, title, snippetInfo, marker);
                     }
                     break;
 
@@ -812,18 +832,29 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                     for (int i = 0; i < hashMapDataSet.get("PHARMACIE").size(); i++) {
                         // For each in String values
                         ArrayList<String> array = hashMapDataSet.get("PHARMACIE").get(i);
+                        String title = array.get(0);
                         Double coordLat = Double.valueOf(array.get(1));
                         Double coordLong = Double.valueOf(array.get(2));
-                        addMarker(coordLat, coordLong, array.get(0), R.drawable.redcrossicon);
+                        ArrayList<String> snippetInfo = new ArrayList<>();
+                        //snippetInfo.add(array.get(3));
+                        //snippetInfo.add("Commune: "+array.get(5));
+                        snippetInfo.add("Tel: "+array.get(6));
+                        addMarker(coordLat, coordLong, title, snippetInfo, R.drawable.redcrossicon);
                     }
                     for (int i = 0; i < hashMapDataSet.get("HOPITAL").size(); i++) {
                         // For each in String values
                         ArrayList<String> array = hashMapDataSet.get("HOPITAL").get(i);
                         //Log.e("Content Array", String.valueOf());
                         //Log.e("Size Array", String.valueOf(array.size()));Double.parseDouble
+                        String title = array.get(0);
                         Double coordLat = Double.valueOf(array.get(1));
                         Double coordLong = Double.valueOf(array.get(2));
-                        addMarker(coordLat, coordLong, array.get(0), R.drawable.hospital_h_icon);
+                        ArrayList<String> snippetInfo = new ArrayList<>();
+                        snippetInfo.add(array.get(3));
+                        //snippetInfo.add("Type: "+array.get(4));
+                        snippetInfo.add("Tel: " + array.get(5));
+                        //snippetInfo.add(array.get(7));
+                        addMarker(coordLat, coordLong, title, snippetInfo, R.drawable.hospital_h_icon);
                     }
                     break;
 
@@ -838,6 +869,7 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                         Double coordLat = Double.valueOf(array.get(1));
                         Double coordLong = Double.valueOf(array.get(2));
                         String type = array.get(7);
+                        String title = array.get(0);
                         int marker = R.drawable.juice_marker;
                         switch (type) {
                             case "terrasse à l'année":
@@ -847,7 +879,11 @@ public class OpenDataExtractorActivity extends ActionBarActivity {
                                 marker = R.drawable.coffee_marker;
                                 break;
                         }
-                        addMarker(coordLat, coordLong, array.get(0), marker);
+                        ArrayList<String> snippetInfo = new ArrayList<>();
+                        //snippetInfo.add(array.get(3));
+                        //snippetInfo.add("Type: " + array.get(7));
+                        snippetInfo.add("Période: "+array.get(6));
+                        addMarker(coordLat, coordLong, title, snippetInfo, marker);
                     }
                     break;
             }
