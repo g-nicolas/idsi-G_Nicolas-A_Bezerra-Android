@@ -30,7 +30,7 @@
     <string name="button_hiking_trails">Parcours randonnée</string>
     <string name="button_bike_trails">Parcours vélo</string>
     <string name="button_terrasse_cafe">Terrasses de cafés</string>
-    <string name="buttonTestGMaps">TestGMaps</string>
+    <string name="Maps">Maps</string>
     <!-- displaymap menu items -->
     <string name="TopoMenu">Topographic</string>
     <string name="StreetMapMenu">Streets</string>

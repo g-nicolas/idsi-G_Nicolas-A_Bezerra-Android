@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
         weather.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
-                startActivityForResult(intent, 2);
+                startActivity(intent);
             }
         });
         tpg.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TPG_Activity.class);
-                startActivityForResult(intent, 3);
+                startActivity(intent);
             }
         });
 
@@ -80,12 +80,12 @@ public class MainActivity extends Activity {
 
     private void onLeftSwipe() {
         Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
-        startActivityForResult(intent, 2);
+        startActivity(intent);
     }
 
     private void onRightSwipe() {
         Intent intent = new Intent(MainActivity.this, TPG_Activity.class);
-        startActivityForResult(intent, 3);
+        startActivity(intent);
     }
 
     private class SwipeGestureDetector

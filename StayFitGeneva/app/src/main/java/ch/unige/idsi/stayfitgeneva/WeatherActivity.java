@@ -257,7 +257,7 @@ public class WeatherActivity extends Activity {
             @Override
             protected String doInBackground(String... params) {
                 try {
-                    ArrayList<Elements> elementsArrayList = new ArrayList<Elements>();
+                    ArrayList<Elements> elementsArrayList = new ArrayList<>();
                     String str = params[0];
                     Document doc = Jsoup.connect(str).get();
                     Elements good = doc.select("div[class=rating hayfever_good_sm]");
@@ -294,7 +294,7 @@ public class WeatherActivity extends Activity {
             protected String doInBackground(String... params) {
             try {
                 String str = params[0];
-                ArrayList<Elements> elementsArrayList = new ArrayList<Elements>();
+                ArrayList<Elements> elementsArrayList = new ArrayList<>();
                 Document doc = Jsoup.connect(str).get();
                 Elements a = doc.select("div[class=rating uv_icon_medium_1_xs]");
                 Elements b = doc.select("div[class=rating uv_icon_medium_2_xs]");

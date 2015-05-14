@@ -12,7 +12,7 @@ tools:context=".MainActivity" >
     android:layout_height="match_parent"
     android:id="@+id/map"
     tools:context="ch.unige.idsi.stayfitgeneva.TPG_Activity"
-    android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    android:name="com.google.android.gms.maps.MapFragment"/>
 
 
 </RelativeLayout>

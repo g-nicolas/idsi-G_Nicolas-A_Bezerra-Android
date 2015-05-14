@@ -3,13 +3,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView android:text="@string/stayfitgeneva" android:layout_width="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="0.0"/>
-
     <Button
         android:id="@+id/maposition"
         android:layout_width="fill_parent"
@@ -39,7 +32,7 @@
         android:id="@+id/weatherbutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="weather"
+        android:text="Weather"
         android:layout_above="@+id/maposition"
         android:layout_weight="1"/>
 
