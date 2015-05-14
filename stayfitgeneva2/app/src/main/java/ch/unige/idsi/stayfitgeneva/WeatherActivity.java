@@ -1,36 +1,34 @@
 package ch.unige.idsi.stayfitgeneva;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-/**
- * Created by andre on 18.04.15.
- */
 public class WeatherActivity extends Activity {
+    GestureDetector gestureDetector;
     TextView cityField;
     TextView updatedField;
     TextView detailsField;
@@ -43,6 +41,7 @@ public class WeatherActivity extends Activity {
     String OPEN_WEATHER_MAP_API;
     Handler handler;
 
+
     /**
      * L'objet TypeFace pointe sur les icones qui se trouve dans le dossier assets/fonts
      * <p/>
@@ -53,10 +52,10 @@ public class WeatherActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
         url = "http://fr.meteovista.be/Europe/Suisse/Geneve/4076470";
         weatherfont = Typeface.createFromAsset(getApplication().getAssets(), "fonts/weather.ttf");
         updateWeatherData();
-        //pol = (TextView) findViewById(R.id.pollen);
         weathericon = (TextView) findViewById(R.id.weather_icon);
         cityField = (TextView) findViewById(R.id.cityField);
         updatedField = (TextView) findViewById(R.id.updatedField);
@@ -68,21 +67,7 @@ public class WeatherActivity extends Activity {
         getozo.execute(url);
         handler = new Handler();
         weathericon.setTypeface(weatherfont);
-
-      /*  try {
-            response = getpol.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-
-        pol.setText(response);*/
-
-
-
-
+        gestureDetector = new GestureDetector(new SwipeGestureDetector());
     }
 
     /**
@@ -253,11 +238,11 @@ public class WeatherActivity extends Activity {
 
 
         class getPollen extends AsyncTask<String, Void, String> {
-            String pollenData = new String();
+            String pollenData = "";
             @Override
             protected String doInBackground(String... params) {
                 try {
-                    ArrayList<Elements> elementsArrayList = new ArrayList<Elements>();
+                    ArrayList<Elements> elementsArrayList = new ArrayList<>();
                     String str = params[0];
                     Document doc = Jsoup.connect(str).get();
                     Elements good = doc.select("div[class=rating hayfever_good_sm]");
@@ -287,14 +272,14 @@ public class WeatherActivity extends Activity {
         }
 
         class getOzone extends AsyncTask<String, Void, String> {
-            String uvData = new String();
-            String soleil = new String();
+            String uvData = "";
+            String soleil = "";
 
             @Override
             protected String doInBackground(String... params) {
             try {
                 String str = params[0];
-                ArrayList<Elements> elementsArrayList = new ArrayList<Elements>();
+                ArrayList<Elements> elementsArrayList = new ArrayList<>();
                 Document doc = Jsoup.connect(str).get();
                 Elements a = doc.select("div[class=rating uv_icon_medium_1_xs]");
                 Elements b = doc.select("div[class=rating uv_icon_medium_2_xs]");
@@ -348,6 +333,59 @@ public class WeatherActivity extends Activity {
             TextView oz = (TextView) findViewById(R.id.uv);
             oz.setText(soleil);
 
+        }
+    }
+    //Méthode pour switcher entre les activités à gauche ou à droite.
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (gestureDetector.onTouchEvent(event)) {
+            return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void onLeftSwipe() {
+        Intent intent= new Intent(WeatherActivity.this,MainActivity.class);
+        startActivityForResult(intent,1);
+    }
+
+    private void onRightSwipe() {
+        Intent intent= new Intent(WeatherActivity.this,MapsActivity.class);
+        startActivityForResult(intent,2);
+    }
+    private class SwipeGestureDetector
+            extends GestureDetector.SimpleOnGestureListener {
+        // Swipe properties, you can change it to make the swipe
+        // longer or shorter and speed
+        private static final int SWIPE_MIN_DISTANCE = 100;
+        private static final int SWIPE_MAX_OFF_PATH = 200;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2,
+                               float velocityX, float velocityY) {
+            try {
+                float diffAbs = Math.abs(e1.getY() - e2.getY());
+                float diff = e1.getX() - e2.getX();
+
+                if (diffAbs > SWIPE_MAX_OFF_PATH)
+                    return false;
+
+                // Left swipe
+                if (diff > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    onLeftSwipe();
+
+                    // Right swipe
+                } else if (-diff > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    onRightSwipe();
+
+                    }
+                } catch (Exception e) {
+                Log.e("Weather", "Error on gestures");
+            }
+            return false;
         }
     }
 }

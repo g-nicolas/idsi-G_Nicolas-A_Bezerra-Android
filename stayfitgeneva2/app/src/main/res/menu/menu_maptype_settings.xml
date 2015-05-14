@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ch.unige.idsi.y15.stayfitgeneva.OpenDataExtractorActivity">
+    <item android:id="@+id/maptype_Topographic" android:title="Topographic map"/>
+    <item android:id="@+id/maptype_StreetMap" android:title="Street map"/>
+    <item android:id="@+id/maptype_HybridMap" android:title="Hybrid map"/>
+    <item android:id="@+id/maptype_SatelliteMap" android:title="Satellite map" />
+</menu>

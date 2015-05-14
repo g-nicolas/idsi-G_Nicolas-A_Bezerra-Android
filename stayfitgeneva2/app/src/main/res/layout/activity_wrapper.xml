@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Prochain départ:"
+            android:text="Prochains départ:"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="20sp"
             android:maxLength="99999999"/>
