@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#0494B6">
     <Button
         android:id="@+id/button_hiking_trail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_hiking_trails" />
+        />
     <Button
         android:id="@+id/button_bike_trail"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_bike_trails" />
+        />
     <Button
         android:id="@+id/button_sports_center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_sport_facility_location" />
+        />
     <Button
         android:id="@+id/button_pharmacy"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_pharmacy_location" />
+        />
 
     <Button
         android:id="@+id/button_patio"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_terrasse_cafe" />
+        />
 
 </LinearLayout>

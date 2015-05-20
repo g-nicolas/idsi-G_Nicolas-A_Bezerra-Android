@@ -1,14 +1,11 @@
 package ch.unige.idsi.stayfitgeneva;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONObject;
@@ -28,7 +25,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class WeatherActivity extends Activity {
-    GestureDetector gestureDetector;
     TextView cityField;
     TextView updatedField;
     TextView detailsField;
@@ -40,6 +36,7 @@ public class WeatherActivity extends Activity {
     String url;
     String OPEN_WEATHER_MAP_API;
     Handler handler;
+
 
 
     /**
@@ -54,6 +51,7 @@ public class WeatherActivity extends Activity {
         setContentView(R.layout.activity_weather);
 
         url = "http://fr.meteovista.be/Europe/Suisse/Geneve/4076470";
+
         weatherfont = Typeface.createFromAsset(getApplication().getAssets(), "fonts/weather.ttf");
         updateWeatherData();
         weathericon = (TextView) findViewById(R.id.weather_icon);
@@ -67,7 +65,6 @@ public class WeatherActivity extends Activity {
         getozo.execute(url);
         handler = new Handler();
         weathericon.setTypeface(weatherfont);
-        gestureDetector = new GestureDetector(new SwipeGestureDetector());
     }
 
     /**
@@ -149,7 +146,7 @@ public class WeatherActivity extends Activity {
         }
     }
 
-    /*
+    /**
     * Cette méthode va récupérer les informations météorologique et les associés avec le layout.
     *
     * */
@@ -184,12 +181,12 @@ public class WeatherActivity extends Activity {
         }
     }
 
-    /*
+    /**
     *
     * Cette classe invoquée à la fin de la méthode renderWeather, nous permet de définir l'icone
     * précise quant à la météo actuelle.
     *
-    * Les limites pour chaque type d'icone à été défini selon les conditions définies sur:
+    * Les limites pour chaque type d'icon à été défini selon les conditions définies sur:
     * http://openweathermap.org/weather-conditions
     *
     * Les icones proviennent du repo github suivant:
@@ -210,6 +207,7 @@ public class WeatherActivity extends Activity {
             switch (id) {
                 case 2:
                     icon = getApplication().getString(R.string.weather_thunder);
+
                     break;
                 case 3:
                     icon = getApplication().getString(R.string.weather_drizzle);
@@ -335,59 +333,7 @@ public class WeatherActivity extends Activity {
 
         }
     }
-    //Méthode pour switcher entre les activités à gauche ou à droite.
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        }
-        return super.onTouchEvent(event);
-    }
 
-    private void onLeftSwipe() {
-        Intent intent= new Intent(WeatherActivity.this,MainActivity.class);
-        startActivityForResult(intent,1);
-    }
-
-    private void onRightSwipe() {
-        Intent intent= new Intent(WeatherActivity.this,MapsActivity.class);
-        startActivityForResult(intent,2);
-    }
-    private class SwipeGestureDetector
-            extends GestureDetector.SimpleOnGestureListener {
-        // Swipe properties, you can change it to make the swipe
-        // longer or shorter and speed
-        private static final int SWIPE_MIN_DISTANCE = 100;
-        private static final int SWIPE_MAX_OFF_PATH = 200;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2,
-                               float velocityX, float velocityY) {
-            try {
-                float diffAbs = Math.abs(e1.getY() - e2.getY());
-                float diff = e1.getX() - e2.getX();
-
-                if (diffAbs > SWIPE_MAX_OFF_PATH)
-                    return false;
-
-                // Left swipe
-                if (diff > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    onLeftSwipe();
-
-                    // Right swipe
-                } else if (-diff > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    onRightSwipe();
-
-                    }
-                } catch (Exception e) {
-                Log.e("Weather", "Error on gestures");
-            }
-            return false;
-        }
-    }
 }
 
 

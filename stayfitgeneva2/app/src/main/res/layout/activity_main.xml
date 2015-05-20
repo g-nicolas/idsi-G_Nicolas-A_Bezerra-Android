@@ -3,44 +3,29 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView android:text="@string/stayfitgeneva" android:layout_width="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="0.0"/>
-
-    <Button
-        android:id="@+id/maposition"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Autour de Moi"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"/>
     <Button
         android:id="@+id/button_maps"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#0494B6"
         android:layout_weight="1"
-        android:text="Maps"
+
         />
 
     <Button
         android:id="@+id/tpg"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/maposition"
-        android:text="TPG"
+        android:background="#FF8000"
         android:layout_centerHorizontal="true"
-        android:layout_weight="1" />
+        android:layout_weight="1.12" />
 
     <Button
         android:id="@+id/weatherbutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="weather"
-        android:layout_above="@+id/maposition"
-        android:layout_weight="1"/>
+        android:background="#ff15cc84"
+        android:textSize="70sp"
+        android:layout_weight="0.76"/>
 
 </LinearLayout>

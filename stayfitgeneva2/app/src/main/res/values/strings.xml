@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">stayfitgeneva</string>
     <string name="stayfitgeneva">StayFitGeneva</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_weather">Weather</string>
+    <string name="title_activity_weather">Météo</string>
     <string name="title_activity_marker">Bus</string>
+    <string name="title_activity_tpg_">TPG</string>
 
     <string name="weather_sunny">&#xf00d;</string>
     <string name="weather_clear_night">&#xf02e;</string>
@@ -15,7 +15,6 @@
     <string name="weather_drizzle">&#xf01c;</string>
     <string name="indice_uv">Indice Uv</string>
     <string name="pollen">Pollen</string>
-    <string name="title_activity_tpg_">Map</string>
     <string name="accueil">Accueil</string>
     <string name="meteo">Meteo</string>
     <string name="cartes">Cartes</string>

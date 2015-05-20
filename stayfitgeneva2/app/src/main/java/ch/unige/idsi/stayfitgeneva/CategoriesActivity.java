@@ -3,6 +3,9 @@ package ch.unige.idsi.stayfitgeneva;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,6 +28,30 @@ public class CategoriesActivity extends Activity {
         button4 = (Button) findViewById(R.id.button_pharmacy);
         button5 = (Button) findViewById(R.id.button_patio);
 
+        Spannable buttonLabel = new SpannableString(" ");
+        buttonLabel.setSpan(new ImageSpan(getApplicationContext(), R.drawable.olympic,
+                ImageSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        button3.setText(buttonLabel);
+
+        Spannable buttonLabel2 = new SpannableString(" ");
+        buttonLabel2.setSpan(new ImageSpan(getApplicationContext(), R.drawable.cocktail,
+                ImageSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        button5.setText(buttonLabel2);
+
+        Spannable buttonLabel3 = new SpannableString(" ");
+        buttonLabel3.setSpan(new ImageSpan(getApplicationContext(), R.drawable.hospital,
+                ImageSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        button4.setText(buttonLabel3);
+
+        Spannable buttonLabel4 = new SpannableString(" ");
+        buttonLabel4.setSpan(new ImageSpan(getApplicationContext(), R.drawable.bicycle,
+                ImageSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        button2.setText(buttonLabel4);
+
+        Spannable buttonLabel5 = new SpannableString(" ");
+        buttonLabel5.setSpan(new ImageSpan(getApplicationContext(), R.drawable.rando,
+                ImageSpan.ALIGN_BOTTOM), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        button1.setText(buttonLabel5);
         /**
          *  When button Parcours randonnée is clicked,
          *
