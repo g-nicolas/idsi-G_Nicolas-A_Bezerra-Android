@@ -61,7 +61,7 @@ public class CategoriesActivity extends Activity {
                 // Perform action on click
                 String buttonText = button1.getText().toString();
                 Intent intent_selected_cat = new Intent(CategoriesActivity.this, OpenDataExtractorActivity.class);
-                intent_selected_cat.putExtra("selected_cat", buttonText);
+                intent_selected_cat.putExtra("selected_cat", "Parcours randonnée");
                 CategoriesActivity.this.startActivity(intent_selected_cat);
 
             }
@@ -75,7 +75,7 @@ public class CategoriesActivity extends Activity {
                 // Perform action on click
                 String buttonText = button2.getText().toString();
                 Intent intent_selected_cat = new Intent(CategoriesActivity.this, OpenDataExtractorActivity.class);
-                intent_selected_cat.putExtra("selected_cat", buttonText);
+                intent_selected_cat.putExtra("selected_cat", "Parcours vélo");
                 CategoriesActivity.this.startActivity(intent_selected_cat);
             }
         });
@@ -88,9 +88,8 @@ public class CategoriesActivity extends Activity {
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                String buttonText = button3.getText().toString();
                 Intent intent_selected_cat = new Intent(CategoriesActivity.this, OpenDataExtractorActivity.class);
-                intent_selected_cat.putExtra("selected_cat", buttonText);
+                intent_selected_cat.putExtra("selected_cat", "Complexe sportif");
                 CategoriesActivity.this.startActivity(intent_selected_cat);
             }
         });
@@ -102,9 +101,9 @@ public class CategoriesActivity extends Activity {
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                String buttonText = button4.getText().toString();
+
                 Intent intent_selected_cat = new Intent(CategoriesActivity.this, OpenDataExtractorActivity.class);
-                intent_selected_cat.putExtra("selected_cat", buttonText);
+                intent_selected_cat.putExtra("selected_cat", "Emplacement pharmacies");
                 CategoriesActivity.this.startActivity(intent_selected_cat);
             }
         });
@@ -116,9 +115,9 @@ public class CategoriesActivity extends Activity {
         button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                String buttonText = button5.getText().toString();
+
                 Intent intent_selected_cat = new Intent(CategoriesActivity.this, OpenDataExtractorActivity.class);
-                intent_selected_cat.putExtra("selected_cat", buttonText);
+                intent_selected_cat.putExtra("selected_cat", "Terrasses de cafés");
                 CategoriesActivity.this.startActivity(intent_selected_cat);
             }
         });
